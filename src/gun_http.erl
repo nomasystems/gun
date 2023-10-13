@@ -617,6 +617,7 @@ send_request(State=#http_state{socket=Socket, transport=Transport, version=Versi
 	%% We use Headers2 because this is the smallest list.
 	Conn = conn_from_headers(Version, Headers2),
 	Out = case Body of
+    undefined when Method =:= <<"GET">> -> get;
 		undefined when Function =:= ws_upgrade -> head;
 		undefined -> request_io_from_headers(Headers2);
 		_ -> head
